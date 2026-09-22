@@ -4,8 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ahmed & Lolo - Engagement Invitation</title>
+    
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
-    <<style>
+    <link rel="icon" href="data:,">
+
+    <!-- 1️⃣ مكتبات Firebase الأساسية في الـ head -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+
+    <style>
         :root {
             --bg-color: transparent;
             --navy: #6b0f1a;
@@ -366,16 +373,30 @@
 }
 
 /* Venue Map & Location Name */
-.venue-location {
-    font-size: 20px !important; /* تكبير حجم الخط */
-    font-weight: 700 !important; /* جعل الخط عريض وواضح */
-    letter-spacing: 2px !important; /* توسيع المسافات بين الحروف */
-    color: #6b0f1a !important; /* اللون النبيتي */
+.venue-info {
+    margin-top: 35px !important;    /* 👈 دي المسافة اللي بتنزل الجملتين لتحت وتبعدهم عن الخط */
+    margin-bottom: 20px !important;
     text-align: center;
-    margin: 15px 0;
-    text-transform: uppercase;
 }
 
+/* السطر الأول: WEDDING VENUE */
+.venue-title {
+    font-size: 18px !important;
+    color: #6b0f1a !important;
+    margin: 0 0 8px 0 !important;  /* مسافة بسيطة بين العنوان واسم القاعة */
+    letter-spacing: 2px !important;
+}
+
+/* السطر الثاني: ZAHRA PALACE, TANTA */
+.venue-location {
+    font-size: 20px !important;
+    font-weight: 700 !important;
+    letter-spacing: 2px !important;
+    color: #6b0f1a !important;     /* نفس اللون العنابي الفخم */
+    text-align: center;
+    margin: 0 !important;
+    text-transform: uppercase;
+}
 .map-container {
     margin: 20px;
     border-radius: 12px;
@@ -715,13 +736,16 @@
         </section>
 
         <!-- Venue Map Section -->
-        <section class="animated-section">
-            <h2 class="section-title">Wedding Venue</h2>
-            <p class="venue-location"> ZAHRA PALACE, TANTA</p>
-            <div class="map-container">
-<iframe src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3426.735356815084!2d31.009798075583408!3d30.810054974547008!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMzDCsDQ4JzM2LjIiTiAzMcKwMDAnNDQuNSJF!5e0!3m2!1sen!2seg!4v1790031100339!5m2!1sen!2seg" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>            </div>
-        </section>
-
+<section class="animated-section">
+    <div class="venue-info">
+        <h2 class="section-title venue-title">Wedding Venue</h2>
+        <p class="venue-location">ZAHRA PALACE, TANTA</p>
+    </div>
+    
+    <div class="map-container">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3426.735356815084!2d31.009798075583408!3d30.810054974547008!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMzDCsDQ4JzM2LjIiTiAzMcKwMDAnNDQuNSJF!5e0!3m2!1sen!2seg!4v1790031100339!5m2!1sen!2seg" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+    </div>
+</section>
 
         <!-- Schedule Timeline Section -->
 <section class="animated-section">
@@ -761,6 +785,7 @@
                     </div>
                 </div>
             </div>
+            
         </section>
 
     </div>
@@ -839,23 +864,57 @@
         setInterval(updateCountdown, 1000);
         updateCountdown();
 
-        // Add to Google Calendar
-        function addToCalendar() {
-            const title = encodeURIComponent("Ahmed & Lolo Wedding");
-            const details = encodeURIComponent("Join us in celebrating the wedding of Ahmed and Lolo!");
-            const location = encodeURIComponent("Zahra Palace, Tanta");
-            const startDate = "20261027T200000Z";  
-            const endDate   = "20261028T000000Z";  
+       // Add to Calendar (دعم كامل للأيفون والأندرويد)
+function addToCalendar() {
+    const titleText = "Ahmed & Lolo Engagement";
+    const detailsText = "Join us in celebrating the engagement of Ahmed and Lolo! ❤️";
+    const locationText = "Zahra Palace, Tanta";
 
-            const calendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${startDate}/${endDate}&details=${details}&location=${location}`;
-            window.open(calendarUrl, '_blank');
-        }
+    // التاريخ: 27 أكتوبر 2026 من 8 مساءً حتى 12 منتصف الليل بتوقيت مصر المحلّي
+    const startDate = "20261027T200000"; 
+    const endDate   = "20261027T235900";
 
-        // Smooth Scroll to RSVP
-        function scrollToRsvp() {
-            document.getElementById('rsvp-section').scrollIntoView({ behavior: 'smooth' });
-        }
+    // فحص نوع الجهاز (هل هو آيفون / آيباد / ماك)
+    const isAppleDevice = /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent) && !window.MSStream;
 
+    if (isAppleDevice) {
+        // للأيفون: إنشاء ملف iCalendar بفتحه مباشرة في Apple Calendar
+        const icsData = [
+            "BEGIN:VCALENDAR",
+            "VERSION:2.0",
+            "PRODID:-//Wedding Invitation//EN",
+            "BEGIN:VEVENT",
+            `SUMMARY:${titleText}`,
+            `DESCRIPTION:${detailsText}`,
+            `LOCATION:${locationText}`,
+            `DTSTART:${startDate}`,
+            `DTEND:${endDate}`,
+            "END:VEVENT",
+            "END:VCALENDAR"
+        ].join("\n");
+
+        const blob = new Blob([icsData], { type: "text/calendar;charset=utf-8" });
+        const link = document.createElement("a");
+        link.href = window.URL.createObjectURL(blob);
+        link.setAttribute("download", "Ahmed_Lolo_Engagement.ics");
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    } else {
+        // للأندرويد والكمبيوتر: فتح Google Calendar
+        const title = encodeURIComponent(titleText);
+        const details = encodeURIComponent(detailsText);
+        const location = encodeURIComponent(locationText);
+
+        const calendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${startDate}/${endDate}&details=${details}&location=${location}&ctz=Africa/Cairo`;
+        window.open(calendarUrl, '_blank');
+    }
+}
+
+// Smooth Scroll to RSVP
+function scrollToRsvp() {
+    document.getElementById('rsvp-section')?.scrollIntoView({ behavior: 'smooth' });
+}
         // Send Wishes Logic
         function submitWish() {
             const name = document.getElementById('guestName').value.trim();
@@ -947,82 +1006,91 @@ window.addEventListener('load', revealOnScroll);
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
 
 <script>
-  // 1️⃣ استبدل البيانات دي ببيانات مشروعك المجاني من Firebase Console
-  const firebaseConfig = {
-      apiKey: "AIzaSyB7xHjeHCSDDGQMPyqvjMtMfPYqkWqxsXE",
-    authDomain: "wedding-card-4b5e0.firebaseapp.com",
-    databaseURL: "https://wedding-card-4b5e0-default-rtdb.firebaseio.com",
-    projectId: "wedding-card-4b5e0",
-    storageBucket: "wedding-card-4b5e0.firebasestorage.app",
-    messagingSenderId: "674923234334",
-    appId: "1:674923234334:web:bfc20292c1dde822771a0f",
-    measurementId: "G-R3EKBEZ5SB"
-  };
 
-  // تهيئة الفايربيس
-  firebase.initializeApp(firebaseConfig);
-  const database = firebase.database();
-  const messagesRef = database.ref('guestbook');
+    // 1️⃣ دالة حماية النصوص
+    function escapeHtml(text) {
+        if (!text) return '';
+        return text
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+    }
 
-  // 2️⃣ إرسال الرسالة للـ Database عند الضغط على الزر
-  document.getElementById('submitGuestbook')?.addEventListener('click', function() {
-      const nameInput = document.getElementById('guestName');
-      const msgInput = document.getElementById('guestMessage');
+    // 2️⃣ تهيئة Firebase
+    const firebaseConfig = {
+        apiKey: "AIzaSyB7xHjeHCSDDGQMPyqvjMtMfPYqkWqxsXE",
+        authDomain: "wedding-card-4b5e0.firebaseapp.com",
+        databaseURL: "https://wedding-card-4b5e0-default-rtdb.firebaseio.com",
+        projectId: "wedding-card-4b5e0",
+        storageBucket: "wedding-card-4b5e0.firebasestorage.app",
+        messagingSenderId: "674923234334",
+        appId: "1:674923234334:web:bfc20292c1dde822771a0f",
+        measurementId: "G-R3EKBEZ5SB"
+    };
 
-      const name = nameInput.value.trim();
-      const message = msgInput.value.trim();
+    if (!firebase.apps.length) {
+        firebase.initializeApp(firebaseConfig);
+    }
+    const database = firebase.database();
+    const messagesRef = database.ref('guestbook');
 
-      if (name === '' || message === '') {
-          alert('برجاء كتابة الاسم والرسالة!');
-          return;
-      }
+    // 3️⃣ دالة إرسال التهنئة (المرتبطة بالزرار onclick="submitWish()")
+    function submitWish() {
+        const nameInput = document.getElementById('guestName');
+        const wishInput = document.getElementById('guestWish');
 
-      // حفظ في قاعدة البيانات مباشرة
-      messagesRef.push({
-          name: name,
-          message: message,
-          timestamp: Date.now()
-      }).then(() => {
-          nameInput.value = '';
-          msgInput.value = '';
-      }).catch((err) => {
-          console.error("خطأ في الإرسال: ", err);
-      });
-  });
+        if (!nameInput || !wishInput) return;
 
-  // 3️⃣ قراءة الرسائل لحظياً واستعراضها لجميع الزوار
-  messagesRef.on('value', (snapshot) => {
-      const messagesList = document.getElementById('messagesList');
-      messagesList.innerHTML = ''; // مسح القائمة القديمة لإعادة الرسم
+        const name = nameInput.value.trim();
+        const message = wishInput.value.trim();
 
-      const data = snapshot.val();
-      if (data) {
-          // ترتيب الرسائل من الأحدث للأقدم
-          const messageArray = Object.values(data).reverse();
+        if (name === '' || message === '') {
+            alert('برجاء كتابة الاسم والتهنئة!');
+            return;
+        }
 
-          messageArray.forEach(item => {
-              const msgCard = document.createElement('div');
-              msgCard.className = 'message-item';
-              msgCard.innerHTML = `
-                  <div class="message-author">${escapeHtml(item.name)}</div>
-                  <div class="message-text">${escapeHtml(item.message)}</div>
-              `;
-              messagesList.appendChild(msgCard);
-          });
-      } else {
-          messagesList.innerHTML = '<p style="text-align:center; font-size:12px; color:#6b0f1a;">كُن أول من يترك تهنئة! ✨</p>';
-      }
-  });
+        // إرسال البيانات للـ Database
+        messagesRef.push({
+            name: name,
+            message: message,
+            timestamp: Date.now()
+        }).then(() => {
+            alert('تم إرسال تهنئتك بنجاح! ✨');
+            nameInput.value = '';
+            wishInput.value = '';
+        }).catch((err) => {
+            console.error("خطأ في الإرسال: ", err);
+            alert('حدث خطأ أثناء الإرسال.');
+        });
+    }
 
-  // دالة لحماية البيانات من الـ XSS
-  function escapeHtml(text) {
-      return text
-          .replace(/&/g, "&amp;")
-          .replace(/</g, "&lt;")
-          .replace(/>/g, "&gt;")
-          .replace(/"/g, "&quot;")
-          .replace(/'/g, "&#039;");
-  }
+    // 4️⃣ قراءة الرسائل وعرضها لحظياً
+    messagesRef.on('value', (snapshot) => {
+        const messagesList = document.getElementById('messagesList');
+        if (!messagesList) return;
+        
+        messagesList.innerHTML = ''; // مسح الرسائل القديمة
+
+        const data = snapshot.val();
+        if (data) {
+            const messageArray = Object.values(data).reverse();
+
+            messageArray.forEach(item => {
+                const msgCard = document.createElement('div');
+                msgCard.className = 'message-item';
+                msgCard.innerHTML = `
+                    <div class="message-author">${escapeHtml(item.name)}</div>
+                    <div>${escapeHtml(item.message)}</div>
+                `;
+                messagesList.appendChild(msgCard);
+            });
+        } else {
+            messagesList.innerHTML = '<p style="text-align:center; font-size:12px; color:#6b0f1a;">كُن أول من يترك تهنئة! ✨</p>';
+        }
+    });
+</script>
 </script>
 </body>
 </html>
