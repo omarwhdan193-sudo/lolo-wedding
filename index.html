@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ahmed & Lolo - Engagement Invitation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+    <<style>
+        :root {
+            --bg-color: transparent;
+            --navy: #6b0f1a;
+            --navy-light: #800020;
+            --gold: #d4af37;
+            --gold-light: #f4e8c1;
+            --text-dark: #6b0f1a;
+            --text-muted: #6b0f1a;
+            --card-bg: rgba(255, 255, 255, 0.4);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* 1️⃣ جعل الخلفية صورة البرواز وتتحرك طبيعي مع الصفحة */
+        body {
+            background-image: url('bg-frame.png') !important; /* اسم صورة البرواز */
+            background-size: 100% auto !important;
+            background-position: top center !important;
+            background-repeat: repeat-y !important;
+            background-attachment: scroll !important; /* يخلي الصورة تتسحب مع الكلام */
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            min-height: 100vh;
+            background-color: #fdfbf7;
+        }
+
+        /* توحيد كل النصوص بالنبيتي */
+        h1, h2, h3, h4, h5, h6, p, span, div, label, li {
+            color: #6b0f1a !important;
+        }
+
+        /* 2️⃣ تعديل mobile-container لإلغاء المربع الأبيض المنقط والظل */
+        .mobile-container {
+            width: 100%;
+            max-width: 430px;
+            background-color: transparent !important; /* إلغاء الخلفية البيضاء */
+            background-image: none !important; /* إلغاء النقط الرمادية */
+            min-height: 100vh;
+            position: relative;
+            box-shadow: none !important; /* إلغاء الظل */
+            margin: 0 auto;
+            padding-bottom: 70px;
+            overflow: visible !important;
+        }
+
+        /* Envelope Overlay Entrance Animation */
+        .envelope-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #0d1b2a;
+            z-index: 999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.8s;
+        }
+
+        .envelope-overlay.opened {
+            opacity: 0;
+            transform: scale(1.15);
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .envelope-card {
+            background: #fffdf9;
+            width: 85%;
+            max-width: 350px;
+            padding: 40px 20px;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            border: 2px solid var(--gold-light);
+            position: relative;
+            animation: pulseGlow 3s infinite ease-in-out;
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+            50% { box-shadow: 0 15px 40px rgba(212, 175, 55, 0.3); }
+        }
+
+        .envelope-card h1 {
+            font-family: 'Cinzel', serif;
+            color: #6b0f1a !important;
+            font-size: 26px;
+            letter-spacing: 2px;
+            margin: 15px 0 5px;
+        }
+
+        .envelope-card p.date {
+            color: #6b0f1a !important;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 14px;
+            margin-bottom: 25px;
+        }
+
+        .btn-open {
+            background: #6b0f1a !important;
+            color: #fff !important;
+            border: none;
+            padding: 12px 35px;
+            font-family: 'Cinzel', serif;
+            font-size: 16px;
+            border-radius: 25px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(107, 15, 26, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .btn-open:hover {
+            transform: translateY(-2px) scale(1.05);
+            background: #800020 !important;
+            box-shadow: 0 6px 20px rgba(107, 15, 26, 0.6);
+        }
+
+        /* Floating Music Toggle */
+        .audio-control {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            width: 45px;
+            height: 45px;
+            background: #6b0f1a;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            cursor: pointer;
+            z-index: 100;
+            border: 2px solid #fff;
+            transition: transform 0.3s;
+        }
+
+        .audio-control:hover {
+            transform: scale(1.1);
+        }
+
+        /* Animated Section Transition */
+        .animated-section {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+
+        .animated-section.active, .animated-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Hero Section Styling */
+        .hero-section {
+            padding: 40px 20px 20px;
+            text-align: center;
+        }
+
+        .floral-frame {
+            border: none !important;
+            border-radius: 0 !important;
+            padding: 20px 10px !important;
+            background: transparent !important;
+            box-shadow: none !important;
+            transition: transform 0.5s ease;
+        }
+
+        .hero-names {
+            font-family: 'Cinzel', serif;
+            font-size: 32px;
+            color: #6b0f1a !important;
+            letter-spacing: 3px;
+            margin: 10px 0;
+            text-transform: uppercase;
+        }
+
+        .ampersand {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 24px;
+            color: #6b0f1a !important;
+            margin: 5px 0;
+        }
+
+        /* Section Headings */
+        .section-title {
+            font-family: 'Cinzel', serif;
+            color: #6b0f1a !important;
+            text-align: center;
+            font-size: 20px;
+            letter-spacing: 2px;
+            margin: 30px 0 10px;
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            text-align: center;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 12px;
+            color: #6b0f1a !important;
+            letter-spacing: 1px;
+            margin-bottom: 25px;
+            text-transform: uppercase;
+        }
+
+        /* Dividers */
+        .divider {
+            text-align: center;
+            margin: 25px 0;
+            opacity: 0.8;
+        }
+
+        .divider svg {
+            width: 150px;
+            height: auto;
+        }
+
+        /* Couple Details */
+        .couple-names {
+            text-align: center;
+            margin: 20px 0;
+            color: #6b0f1a !important;
+        }
+
+        .person-name {
+            font-size: 36px;
+            color: #6b0f1a !important;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .person-role {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 12px;
+            letter-spacing: 3px;
+            color: #6b0f1a !important;
+            margin-top: 4px;
+        }
+
+        /* Photo Gallery Cards */
+        .single-frame-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 25px auto;
+        }
+
+        .oval-photo {
+            width: 220px;
+            height: 280px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 4px solid var(--gold); 
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15), 0 0 0 10px rgba(212, 175, 55, 0.15);
+            transition: transform 0.4s ease;
+        }
+
+        .oval-photo:hover {
+            transform: scale(1.03);
+        }
+
+        /* Date Section */
+        .date-display {
+            text-align: center;
+            font-family: 'Cinzel', serif;
+            font-size: 22px;
+            color: #6b0f1a !important;
+            margin: 15px 0;
+        }
+
+        /* Countdown */
+        .countdown-container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.5) !important;
+            margin: 0 20px;
+            padding: 15px;
+            border-radius: 12px;
+            border: 1px solid var(--gold);
+        }
+
+        .countdown-timer {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 16px;
+            color: #6b0f1a !important;
+            font-weight: 500;
+        }
+
+        /* Calendar Widget */
+        .calendar-card {
+            background: rgba(255, 255, 255, 0.6) !important;
+            margin: 25px 20px;
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid var(--gold);
+        }
+
+        .calendar-header {
+            text-align: center;
+            font-family: 'Cinzel', serif;
+            color: #6b0f1a !important;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            text-align: center;
+            gap: 8px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 13px;
+        }
+
+        .day-name {
+            font-weight: 600;
+            color: #6b0f1a !important;
+        }
+
+        .day-number {
+            padding: 6px 0;
+            color: #6b0f1a !important;
+        }
+
+       /* Action Buttons */
+.btn-container {
+    padding: 0 20px;
+    margin: 20px 0;
+    text-align: center;
+}
+
+.btn-action {
+    width: 100%;
+    background: #6b0f1a !important;
+    color: white !important;
+    border: none;
+    padding: 14px;
+    border-radius: 30px;
+    font-family: 'Cinzel', serif;
+    font-size: 15px;
+    letter-spacing: 1px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(107, 15, 26, 0.3);
+    margin-bottom: 10px;
+    transition: all 0.3s ease;
+}
+
+.btn-action:hover {
+    background: #800020 !important;
+    transform: translateY(-2px);
+}
+
+/* Venue Map & Location Name */
+.venue-location {
+    font-size: 20px !important; /* تكبير حجم الخط */
+    font-weight: 700 !important; /* جعل الخط عريض وواضح */
+    letter-spacing: 2px !important; /* توسيع المسافات بين الحروف */
+    color: #6b0f1a !important; /* اللون النبيتي */
+    text-align: center;
+    margin: 15px 0;
+    text-transform: uppercase;
+}
+
+.map-container {
+    margin: 20px;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    border: 2px solid var(--gold);
+}
+
+.map-container iframe {
+    width: 100%;
+    height: 200px;
+    border: none;
+}
+
+/* Palette Dots */
+.palette-container {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin: 15px 0;
+}
+
+.color-dot {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    transition: transform 0.3s;
+}
+
+.color-dot:hover {
+    transform: scale(1.15);
+}
+        /* Schedule Timeline */
+        .timeline {
+            position: relative;
+            padding: 0 20px;
+            margin: 20px 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: #6b0f1a;
+            opacity: 0.3;
+        }
+
+        .timeline-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .timeline-time {
+            width: 42%;
+            text-align: right;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            color: #6b0f1a !important;
+        }
+
+        .timeline-dot {
+            width: 12px;
+            height: 12px;
+            background: #6b0f1a;
+            border-radius: 50%;
+            z-index: 2;
+        }
+
+        .timeline-title {
+            width: 42%;
+            text-align: left;
+            font-family: 'Playfair Display', serif;
+            font-size: 16px;
+            color: #6b0f1a !important;
+        }
+
+        /* Guestbook Form */
+        .guestbook-card {
+            background: rgba(255, 255, 255, 0.6) !important;
+            margin: 20px;
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid var(--gold);
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 12px;
+            border: 1px solid var(--gold);
+            border-radius: 8px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 14px;
+            outline: none;
+            background: rgba(255, 255, 255, 0.8);
+        }
+
+        .form-input:focus {
+            border-color: #6b0f1a;
+        }
+
+        textarea.form-input {
+            height: 80px;
+            resize: none;
+        }
+
+        .messages-list {
+            margin-top: 20px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .message-item {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border-left: 3px solid #6b0f1a;
+            font-size: 13px;
+        }
+
+        .message-author {
+            font-weight: bold;
+            color: #6b0f1a !important;
+            margin-bottom: 2px;
+        }
+        /* تحسين شكل الـ Scrollbar لرسائل دفتر الزوار */
+.messages-list::-webkit-scrollbar {
+    width: 5px;
+}
+
+.messages-list::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 10px;
+}
+
+.messages-list::-webkit-scrollbar-thumb {
+    background: #6b0f1a;
+    border-radius: 10px;
+}
+
+.message-text {
+    color: #333;
+    line-height: 1.4;
+    word-break: break-word;
+}
+
+        /* تنسيق الرقم والقلب */
+        .active-date {
+            position: relative !important;
+            display: inline-flex !important;
+            justify-content: center;
+            align-items: center;
+            width: 28px;
+            height: 28px;
+            color: #ffffff !important;
+            font-weight: bold;
+            font-size: 13px;
+            z-index: 1;
+        }
+
+        .active-date::before,
+        .active-date::after {
+            content: "";
+            position: absolute;
+            top: 2px;
+            width: 15px;
+            height: 24px;
+            border-radius: 15px 15px 0 0;
+            background: #8b0000;
+            z-index: -1;
+        }
+
+        .active-date::before {
+            left: 14px;
+            transform: rotate(-45deg);
+            transform-origin: 0 100%;
+        }
+
+        .active-date::after {
+            left: -1px;
+            transform: rotate(45deg);
+            transform-origin: 100% 100%;
+        }
+
+        .petal {
+    position: fixed !important;
+    top: -20px;
+    border-radius: 15px 0 15px 0;
+    opacity: 0.9;
+    pointer-events: none;
+    z-index: 99999 !important; /* ضمان ظهوره فوق كل العناصر */
+    animation: fall linear forwards;
+}
+
+@keyframes fall {
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(105vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+</style>
+</head>
+<body>
+
+    <!-- Intro Envelope Modal with Scale/Fade Animation -->
+    <div class="envelope-overlay" id="envelopeOverlay">
+        <div class="envelope-card">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="var(--navy)">
+                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+            </svg>
+            <h1>Ahmed & Lolo</h1>
+            <p class="date">Octber 27, 2026</p>
+            <p style="margin-bottom: 25px; font-style: italic; color: #555;">Cordially Invites You</p>
+            <button class="btn-open" onclick="openInvitation()">Open</button>
+        </div>
+    </div>
+
+    <!-- Floating Audio Control Button -->
+    <div class="audio-control" onclick="toggleAudio()" title="Toggle Music">
+        <span id="audioIcon">🎵</span>
+    </div>
+    <audio id="bgMusic" loop>
+        <source src="music.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Main Container -->
+    <div class="mobile-container" id="mainContainer">
+        
+        <!-- Hero Section -->
+        <section class="hero-section animated-section">
+            <div class="floral-frame">
+                <div class="hero-names">Ahmed</div>
+                <div class="ampersand">&</div>
+                <div class="hero-names">LOlo</div>
+            </div>
+        </section>
+
+         <section class="animated-section">
+         <h2 class="section-title">Engagement Info</h2>
+         <p class="subtitle">We Joyfully Announce The Engagement Of Our Children</p>
+         </section>
+
+        <!-- Couple Details Section -->
+        <section class="animated-section">
+            <div class="couple-names">
+                <div class="person-name">Ahmed</div>
+                <div class="person-role">GROOM</div>
+                <div class="ampersand" style="margin: 10px 0;">&</div>
+                <div class="person-name">Lolo</div>
+                <div class="person-role">BRIDE</div>
+            </div>
+        </section>
+
+        <div class="divider animated-section">
+            <svg viewBox="0 0 200 20">
+                <path d="M0,10 Q50,0 100,10 Q150,20 200,10" fill="none" stroke="var(--navy)" stroke-width="1"/>
+                <circle cx="100" cy="10" r="4" fill="var(--gold)"/>
+            </svg>
+        </div>
+
+        <!-- Photo Gallery Section -->
+        <!-- Single Oval Photo Section -->
+        <section class="animated-section">
+        <h2 class="section-title" style="font-family: 'Playfair Display', serif; font-style: italic; font-weight: 400; text-transform: none; font-size: 24px; margin-bottom: 20px;">
+        (( لِكُــلِّ أُمْــنِــيَــةٍ مَــوْعِــدٌ ))    </h2>
+        <div class="single-frame-container">
+        <img src="lolo&ahmed .jpg" alt="Ahmed & Lolo" class="oval-photo">
+         </div>
+         </section>
+
+        <div class="divider animated-section">
+            <svg viewBox="0 0 200 20">
+                <path d="M0,10 Q50,0 100,10 Q150,20 200,10" fill="none" stroke="var(--navy)" stroke-width="1"/>
+                <circle cx="100" cy="10" r="4" fill="var(--gold)"/>
+            </svg>
+        </div>
+
+        <!-- Reception & Countdown Section -->
+        <section class="animated-section">
+            <h2 class="section-title">Reception Info</h2>
+            <p class="subtitle">The Reception Will Take Place At:</p>
+            
+            <div class="date-display">8:00</div>
+            <div class="date-display" style="font-size: 20px; font-weight: bold;">
+                Tuesday &nbsp;|&nbsp; 27 &nbsp;|&nbsp; October
+            </div>
+            <div class="date-display" style="font-size: 18px;">2026</div>
+
+            <div class="countdown-container">
+                <div style="font-family: 'Cinzel', serif; font-size: 14px; margin-bottom: 5px; color: var(--navy);">COUNTDOWN</div>
+                <div class="countdown-timer" id="timer">Loading...</div>
+            </div>
+        </section>
+
+        <!-- Calendar Widget Section -->
+        <section class="animated-section">
+            <div class="calendar-card">
+                <div class="calendar-header">October 2026</div>
+                <div class="calendar-grid">
+                    <div class="day-name">Mo</div><div class="day-name">Tu</div><div class="day-name">We</div>
+                    <div class="day-name">Th</div><div class="day-name">Fr</div><div class="day-name">Sa</div>
+                    <div class="day-name">Su</div>
+
+                    <div class="day-number"></div><div class="day-number"></div><div class="day-number"></div>
+                    <div class="day-number"></div><div class="day-number"></div><div class="day-number">1</div>
+                    <div class="day-number">2</div><div class="day-number">3</div><div class="day-number">4</div>
+                    <div class="day-number">5</div><div class="day-number">6</div><div class="day-number">7</div>
+                    <div class="day-number">8</div><div class="day-number">9</div><div class="day-number">10</div>
+                    <div class="day-number">11</div><div class="day-number">12</div><div class="day-number">13</div>
+                    <div class="day-number">14</div><div class="day-number">15</div><div class="day-number">16</div>
+                    <div class="day-number">17</div><div class="day-number">18</div><div class="day-number">19</div>
+                    <div class="day-number">20</div><div class="day-number">21</div><div class="day-number">22</div>
+                    <div class="day-number">23</div><div class="day-number">24</div><div class="day-number">25</div>
+                    <div class="day-number">26</div><div class="calendar-date">
+<td><span class="active-date">27</span></td></div><div class="day-number">28</div>
+                    <div class="day-number">29</div><div class="day-number">30</div><div class="day-number">31</div>
+                </div>
+            </div>
+
+            <div class="btn-container">
+                <button class="btn-action" onclick="addToCalendar()">Add To Calendar</button>
+                <button class="btn-action" style="background: var(--navy-light);" onclick="scrollToRsvp()">Confirm Attendance</button>
+            </div>
+        </section>
+
+        <!-- Venue Map Section -->
+        <section class="animated-section">
+            <h2 class="section-title">Wedding Venue</h2>
+            <p class="venue-location">ZAHRA PALACE, TANAT</p>
+            <div class="map-container">
+<iframe src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3426.735356815084!2d31.009798075583408!3d30.810054974547008!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMzDCsDQ4JzM2LjIiTiAzMcKwMDAnNDQuNSJF!5e0!3m2!1sen!2seg!4v1790031100339!5m2!1sen!2seg" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>            </div>
+        </section>
+
+
+        <!-- Schedule Timeline Section -->
+<section class="animated-section">
+    <h2 class="section-title">Wedding Day Schedule</h2>
+    <div class="timeline">
+        <div class="timeline-item">
+            <div class="timeline-time">8:00</div>
+            <div class="timeline-dot"></div>
+            <div class="timeline-title">Welcome & Entrance</div>
+        </div>
+        <div class="timeline-item">
+            <div class="timeline-time">9:00</div>
+            <div class="timeline-dot"></div>
+            <div class="timeline-title">First Dance & Party</div>
+        </div>
+        
+        
+        <div class="timeline-item">
+            <div class="timeline-time">12:00</div>
+            <div class="timeline-dot"></div>
+            <div class="timeline-title">End</div>
+        </div>
+    </div>
+</section>
+        <!-- Guestbook Section -->
+        <section class="animated-section" id="rsvp-section">
+            <h2 class="section-title">Guestbook</h2>
+            <div class="guestbook-card">
+                <input type="text" id="guestName" class="form-input" placeholder="Enter your name*">
+                <textarea id="guestWish" class="form-input" placeholder="Enter your wishes*"></textarea>
+                <button class="btn-action" onclick="submitWish()">Send Wishes</button>
+
+                <div class="messages-list" id="messagesList">
+                    <div class="message-item">
+                        <div class="message-author">omar</div>
+                        <div>Congratulations Ahmed & Lolo! So happy for you both! ❤️</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <script>
+        // Open Envelope Logic with Smooth Fade Out
+        function openInvitation() {
+            const overlay = document.getElementById('envelopeOverlay');
+            overlay.classList.add('opened');
+            
+            // Trigger Intersection Observer for smooth section entry
+            setTimeout(checkAnimations, 300);
+
+            // Play background music
+            const music = document.getElementById('bgMusic');
+            music.play().then(() => {
+                isPlaying = true;
+                document.getElementById('audioIcon').innerText = '🔊';
+            }).catch(e => console.log('Autoplay blocked'));
+        }
+
+        // Toggle Audio Control
+        let isPlaying = false;
+        function toggleAudio() {
+            const music = document.getElementById('bgMusic');
+            const icon = document.getElementById('audioIcon');
+            if (isPlaying) {
+                music.pause();
+                icon.innerText = '🎵';
+            } else {
+                music.play();
+                icon.innerText = '🔊';
+            }
+            isPlaying = !isPlaying;
+        }
+
+        // Scroll Intersection Observer for Animated Sections Transitions
+        const observerOptions = {
+            root: document.getElementById('mainContainer'),
+            threshold: 0.15
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        function checkAnimations() {
+            document.querySelectorAll('.animated-section').forEach(section => {
+                observer.observe(section);
+            });
+        }
+
+        // Countdown Timer Logic
+        const weddingDate = new Date('October 27, 2026 08:00:00').getTime();
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const difference = weddingDate - now;
+
+            if (difference > 0) {
+                const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+                document.getElementById('timer').innerText = 
+                    `${days} days ${hours} hours ${minutes} min ${seconds} sec`;
+            } else {
+                document.getElementById('timer').innerText = "The Wedding Day is Here!";
+            }
+        }
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        // Add to Google Calendar
+        function addToCalendar() {
+            const title = encodeURIComponent("Ahmed & Lolo Wedding");
+            const details = encodeURIComponent("Join us in celebrating the wedding of Ahmed and Lolo!");
+            const location = encodeURIComponent("Zahra Palace, Tanta");
+            const startDate = "20261027T200000Z";  
+            const endDate   = "20261028T000000Z";  
+
+            const calendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${startDate}/${endDate}&details=${details}&location=${location}`;
+            window.open(calendarUrl, '_blank');
+        }
+
+        // Smooth Scroll to RSVP
+        function scrollToRsvp() {
+            document.getElementById('rsvp-section').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Send Wishes Logic
+        function submitWish() {
+            const name = document.getElementById('guestName').value.trim();
+            const wish = document.getElementById('guestWish').value.trim();
+
+            if (!name || !wish) {
+                alert('Please fill in both your name and wishes!');
+                return;
+            }
+
+            const list = document.getElementById('messagesList');
+            const newMsg = document.createElement('div');
+            newMsg.className = 'message-item';
+            newMsg.innerHTML = `<div class="message-author">${escapeHtml(name)}</div><div>${escapeHtml(wish)}</div>`;
+            
+            list.prepend(newMsg);
+
+            document.getElementById('guestName').value = '';
+            document.getElementById('guestWish').value = '';
+            alert('Thank you for your wishes!');
+        }
+
+        function escapeHtml(text) {
+            return text.replace(/[&<>"']/g, function(m) {
+                return {
+                    '&': '&amp;',
+                    '<': '&lt;',
+                    '>': '&gt;',
+                    '"': '&quot;',
+                    "'": '&#039;'
+                }[m];
+            });
+        }
+        // 1. تشغيل تساقط الورد عند الضغط على زر Open
+function dropPetals() {
+    const petalCount = 40; // عدد بتلات الورد
+    for (let i = 0; i < petalCount; i++) {
+        setTimeout(() => {
+            const petal = document.createElement('div');
+            petal.className = 'petal';
+            
+            // أحجام وألوان متدرجة للورد
+            const size = Math.random() * 12 + 10 + 'px';
+            petal.style.width = size;
+            petal.style.height = size;
+            petal.style.left = Math.random() * 100 + 'vw';
+            petal.style.animationDuration = Math.random() * 3 + 2 + 's';
+            
+            // ألوان وردي ونبيتي متناسقة
+            const colors = ['#e8a0bf', '#e080a8', '#6b0f1a', '#f7f5eb'];
+            petal.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+
+            document.body.appendChild(petal);
+
+            setTimeout(() => {
+                petal.remove();
+            }, 5000);
+        }, i * 100);
+    }
+}
+
+// 🎯 تم تصحيح اسم الكلاس هنا من .open-btn إلى .btn-open
+document.addEventListener('DOMContentLoaded', function() {
+    const openBtn = document.querySelector('.btn-open') || document.querySelector('.open-btn');
+    if (openBtn) {
+        openBtn.addEventListener('click', function() {
+            dropPetals();
+        });
+    }
+});
+
+// 2. تشغيل الأنيميشن عند التمرير (Scroll Animation)
+function revealOnScroll() {
+    const sections = document.querySelectorAll('.animated-section');
+    sections.forEach(section => {
+        const windowHeight = window.innerHeight;
+        const sectionTop = section.getBoundingClientRect().top;
+        if (sectionTop < windowHeight - 50) {
+            section.classList.add('active');
+        }
+    });
+}
+
+window.addEventListener('scroll', revealOnScroll);
+window.addEventListener('load', revealOnScroll);
+    </script>
+    <!-- استدعاء مكتبات Firebase -->
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+
+<script>
+  // 1️⃣ استبدل البيانات دي ببيانات مشروعك المجاني من Firebase Console
+  const firebaseConfig = {
+      apiKey: "AIzaSyB7xHjeHCSDDGQMPyqvjMtMfPYqkWqxsXE",
+    authDomain: "wedding-card-4b5e0.firebaseapp.com",
+    databaseURL: "https://wedding-card-4b5e0-default-rtdb.firebaseio.com",
+    projectId: "wedding-card-4b5e0",
+    storageBucket: "wedding-card-4b5e0.firebasestorage.app",
+    messagingSenderId: "674923234334",
+    appId: "1:674923234334:web:bfc20292c1dde822771a0f",
+    measurementId: "G-R3EKBEZ5SB"
+  };
+
+  // تهيئة الفايربيس
+  firebase.initializeApp(firebaseConfig);
+  const database = firebase.database();
+  const messagesRef = database.ref('guestbook');
+
+  // 2️⃣ إرسال الرسالة للـ Database عند الضغط على الزر
+  document.getElementById('submitGuestbook')?.addEventListener('click', function() {
+      const nameInput = document.getElementById('guestName');
+      const msgInput = document.getElementById('guestMessage');
+
+      const name = nameInput.value.trim();
+      const message = msgInput.value.trim();
+
+      if (name === '' || message === '') {
+          alert('برجاء كتابة الاسم والرسالة!');
+          return;
+      }
+
+      // حفظ في قاعدة البيانات مباشرة
+      messagesRef.push({
+          name: name,
+          message: message,
+          timestamp: Date.now()
+      }).then(() => {
+          nameInput.value = '';
+          msgInput.value = '';
+      }).catch((err) => {
+          console.error("خطأ في الإرسال: ", err);
+      });
+  });
+
+  // 3️⃣ قراءة الرسائل لحظياً واستعراضها لجميع الزوار
+  messagesRef.on('value', (snapshot) => {
+      const messagesList = document.getElementById('messagesList');
+      messagesList.innerHTML = ''; // مسح القائمة القديمة لإعادة الرسم
+
+      const data = snapshot.val();
+      if (data) {
+          // ترتيب الرسائل من الأحدث للأقدم
+          const messageArray = Object.values(data).reverse();
+
+          messageArray.forEach(item => {
+              const msgCard = document.createElement('div');
+              msgCard.className = 'message-item';
+              msgCard.innerHTML = `
+                  <div class="message-author">${escapeHtml(item.name)}</div>
+                  <div class="message-text">${escapeHtml(item.message)}</div>
+              `;
+              messagesList.appendChild(msgCard);
+          });
+      } else {
+          messagesList.innerHTML = '<p style="text-align:center; font-size:12px; color:#6b0f1a;">كُن أول من يترك تهنئة! ✨</p>';
+      }
+  });
+
+  // دالة لحماية البيانات من الـ XSS
+  function escapeHtml(text) {
+      return text
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#039;");
+  }
+</script>
+</body>
+</html>
