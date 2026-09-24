@@ -610,6 +610,37 @@
         opacity: 0;
     }
 }
+        /* --- fix overlay text with frame & roses --- */
+
+/* مسافات أمان من اليمين والشمال لكل السكاشن */
+section, 
+.section-container,
+.reception-section,
+.schedule-section {
+    padding-left: 30px !important;
+    padding-right: 30px !important;
+    box-sizing: border-box !important;
+}
+
+/* ضبط العناوين العريضة عشان تتلم في المنتصف */
+h2, 
+.section-title, 
+.schedule-title {
+    font-size: 1.25rem !important;
+    max-width: 80% !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    padding: 0 10px !important;
+    letter-spacing: 1px !important;
+    word-break: break-word !important;
+}
+
+/* تحسين الخط والشكل للموبايل */
+@media (max-width: 480px) {
+    h2, .section-title {
+        font-size: 1.1rem !important;
+    }
+}
 </style>
 </head>
 <body>
@@ -649,7 +680,7 @@
 
          <section class="animated-section">
          <h2 class="section-title">Engagement Info</h2>
-         <p class="subtitle">We Joyfully Announce The Engagement Of Our Children</p>
+         <p class="subtitle">We Joyfully Invite You To Celebrate The Engagement Of</p>
          </section>
 
         <!-- Couple Details Section -->
