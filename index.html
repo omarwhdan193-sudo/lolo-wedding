@@ -612,29 +612,38 @@
 }
 /* --- Fix overlay text with frame & roses --- */
 
-/* مسافات أمان للسكاشن العادية */
-section:not(.guestbook-section), 
-.section-container {
-    padding-left: 35px !important;
-    padding-right: 35px !important;
+/* مسافات أمان للسكاشن والنصوص عشان ما تلمسش الورود الجانبية */
+.animated-section:not(#rsvp-section) {
+    padding-left: 30px !important;
+    padding-right: 30px !important;
     box-sizing: border-box !important;
 }
 
-/* إعادة سكشن الجيست بوك لحجمه الطبيعي الكبير */
-.guestbook-section,
-.guestbook-container {
-    width: 95% !important;
-    max-width: 500px !important;
-    padding-left: 5px !important;
-    padding-right: 5px !important;
-    margin: 0 auto !important;
+/* توحيد الحجم الكبير للـ Calendar والـ Map والـ Guestbook */
+.calendar-card,
+.map-container,
+.guestbook-card {
+    margin-left: 10px !important;
+    margin-right: 10px !important;
+    width: calc(100% - 20px) !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
 }
 
-/* تحسين النصوص والمسافات الرأسية للموبايل */
+/* إعادة تمديد سكشن الجيست بوك والسكاشن التفاعلية لفرش الشاشة */
+#rsvp-section,
+.guestbook-section {
+    padding-left: 5px !important;
+    padding-right: 5px !important;
+    width: 100% !important;
+}
+
+/* تحسين حجم العناوين للسيولة للموبايل */
 @media (max-width: 480px) {
     h2 {
         font-size: 1.1rem !important;
     }
+}
 }
 </style>
 </head>
